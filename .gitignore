@@ -30,7 +30,7 @@ Thumbs.db
 *.tmp
 *.temp
 
-# GitHub Copilot (ваша ошибка)
+
 .github/
 copilot.ps1
 
@@ -42,3 +42,4 @@ copilot.ps1
 *.rar
 *.zip
 *.exe
+*.gitignore

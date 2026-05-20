@@ -6,7 +6,6 @@ from sprite import Enemy, levelsprite, Sprite
 import os
 import sys
 
-# ДЛЯ РАБОТЫ С ФАЙЛАМИ
 def get_data_path(relative_path):
     if getattr(sys, 'frozen', False):
         base_path = os.path.dirname(sys.executable)
@@ -16,7 +15,6 @@ def get_data_path(relative_path):
 
 image_path = get_data_path("bg.png")
 
-# НАСТРОЙКА ОКНА
 def setup_screen():
     screen = Screen()
     screen.setup(0.75, 0.75)
@@ -87,7 +85,6 @@ def restart_level():
     setup_game_objects(player, enemies)
     screen.update()
 
-# Первоначальная загрузка
 player, enemies = checklevel(level, walls)
 if player is None:
     print("Не удалось загрузить уровень!")
@@ -99,22 +96,17 @@ setup_game_objects(player, enemies)
 game_over = False
 last_frame_time = time.time()
 
-# ГЛАВНЫЙ ИГРОВОЙ ЦИКЛ
 while not game_over:
     current_time = time.time()
     frame_time = current_time - last_frame_time
-    
-    # Обработка движения игрока (с ограничением частоты)
+
     player.process_movement()
-    
-    # Движение врагов
+
     for enemy in enemies:
         enemy.move_auto()
-    
-    # Проверка сбора монет
+
     check_coin_collision(player)
-    
-    # Проверка завершения уровня
+
     if all_coins_collected():
         print(f"Уровень {level} пройден!")
         level += 1
@@ -122,8 +114,7 @@ while not game_over:
             print("Поздравляем! Все уровни пройдены! Ты победил!")
             game_over = True
             break
-        
-        # Переход на следующий уровень
+
         screen.clear()
         screen.bgcolor("#58751E")
         screen.bgpic(image_path)
@@ -141,8 +132,7 @@ while not game_over:
         screen.update()
         last_frame_time = time.time()
         continue
-    
-    # Проверка столкновения с врагом
+
     collision = False
     for enemy in enemies:
         if player.is_collide(enemy):
@@ -157,7 +147,7 @@ while not game_over:
     
     screen.update()
     last_frame_time = current_time
-    time.sleep(0.015)  # Небольшая задержка для снижения нагрузки CPU
+    time.sleep(0.015)
 
 # Завершение игры
 player.hideturtle()
